@@ -1,0 +1,154 @@
+----------A----------
+Project 3 - Gerp
+authors: Cullen McCaleb and Frank Li
+date: 12/4
+
+----------B----------
+Purpose: The purpose of the gerp program is to search for a given word inside
+         of a given directory, and print the location of each instance of
+         the word.
+
+----------C----------
+Acknowledgements: cplusplus.com, stackoverflow
+
+----------D----------
+Files
+
+main.cpp:
+    This file is the main function for our Gerp project, and runs the runGerp
+    function from the searchDir class that launches the entire program.
+
+stringProcessing.h:
+    This is the header file for the stringProcessing functions 
+    stripNonAlphaNum() and isAlphaNum() which removes all
+    the non-alphabetical characters from a given word.
+
+stringProcessing.cpp:
+    This file contains the functions for the stringProcessing class.
+
+HashMap.cpp:
+    This file contains the functio definitions and implementation for a
+    HashMap class that behaves as a hash map. It uses templates to create
+    this hash map, and offers the public functions insert, get, at, inHash,
+    and size.
+
+wordHash.h:
+    This is the header file for the wordHash class which creates an FSTree
+    for the given directory, and fills in our index using this tree. Our index
+    is a HashMap inside of a HashMap, where the first hash has a string as the
+    key and a HashMap as its value, and the second HashMap has a string as its
+    key and a vector of wordInstances (which contain information for a line
+    and a path) as the value.
+
+wordHash.cpp:
+    This file contains the implementation for the wordHash class.
+
+searchDir.h:
+    This is the header file for the searchDir class which deals with the user 
+    input, output and searching for the case sensitive and insensitive instance
+    of the word in the given directory. It uses the index that was built in
+    the wordHash class. It's only public function is runGerp, which launches
+    the entire program.
+
+searchDir.cpp:
+    This file contains the implementation of the searchDir class. 
+
+makefile:
+    This file handles the execution of the program and compiles the program
+    using the keyword "make".
+
+unit_tests.h:
+    This is the framework that we used for testing the functionalities of the 
+    program.
+
+README:
+    This file contains information for the Gerp project.
+
+Testing Files:
+    sorted_testOutput.txt, sorted_testOutput2.txt:
+        - These files contained a brief amount of diff testing with tinyData.
+          They tested @i well with GERP, and multiple results with we.
+          There are two files because they also tested @f.
+
+    sorted_testSG.txt:
+        - Our gerp's results for the champions-query.txt test on the 
+          smallGutenberg directory.
+          This file tested when the word does not exist in the directory.
+
+    big_champions.txt:
+        - Tested the big_champions input file on the large gutenberg directory.
+    
+    tiny_long_query.txt
+        - Tested the long query input file on the tinyData directory.
+          Almost all of the words weren't found , but it tested these error
+          messages.
+
+
+----------E----------
+type "make" in the terminal to compile
+type "./gerp [directory name] [output filename]" to execute the program
+
+
+----------F----------
+The functionality of Gerp begins with calling an instance of the searchDir 
+class in main.cpp. The searchDir class method takes a directory and an output
+file as parameters. It calls the wordHash class to create a double hash 
+structure and an FSTree that stores the names of the directories and words
+in them. A hashmap is the underlying data structure for the double 
+hashing in wordHash and is implemented in the HashMap class.
+
+----------G----------
+The primary data structure for this project is a hash map. The implementation
+for our hash map is contained in the HashMap class. Th index is a HashMap 
+inside of a HashMap, where the first hash has a string as the key and a 
+HashMap as its value, and the second HashMap has a string as its key and a 
+vector of wordInstances (which contain information for a line and a path) as 
+the value. The string for the outer map should be the lowercase version of the
+word, and the inner map string is the case sensitive version.
+
+To fill our index, the wordHash class first creates a paths vector, and fills
+it by traversing the FSTree. The paths vector contains every file, so this
+array is looped through, and the files are read, and every word from every
+file goes into the HashMap. The wordInstance holds an index to the
+aforementioned paths array, and the line number which is kept track of by
+a counter.
+There is also a lines vector that is filled in at the same time, and used to
+print the lines that the searched word appears on.
+
+The FSTree data structure is given, but it is a tree which was an efficient
+way of storing the files, and was easy to traverse through.
+
+We chose to use a HashMap because it is very efficient to search through, and
+we knew there would be a lot of data to search through. The double hash made
+it very efficient to search for a given word, in both the case sensitive and
+insensitive searches.
+
+We implemented the HashMap using vectors because they automatically resize
+themselves, and are relatively easy to use in the sense that they offer
+the push_back, emplace_back, and [] functions.
+
+
+----------H----------
+To test, we primarily used unit_test.h initially for the stringProcessing 
+files, most of HashMap, and some of wordHash. 
+
+These unit tests began to get
+difficult to write, so we began to rely on testing in main.cpp, and sending 
+a lot of debugging and maintenance messages to std::cout. This way, we knew
+that everything worked together properly. It was convenient because building
+the program was fairly linear, in the sense that once we finished one part,
+we could move to the next and make sure everything worked together properly
+like it should in the finished product, using main.cpp.
+
+Once we had a mostly finished product, a large part of our testing came from
+diff testing. Some notable files we used in diff testing are attached, and
+briefly explained in the files section.
+
+We also used gerp_perf, and discovered our initial solution was very slow.
+So we used std::chrono to check on the what part was slow, narrowed it down
+to how we read the files, and fixed our solution from there.
+
+
+----------I----------
+about 22 hours
+

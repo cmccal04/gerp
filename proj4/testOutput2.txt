@@ -1,0 +1,5 @@
+proj-gerp-test-dirs/tinyData/a/you:1: grep grep grep!
+proj-gerp-test-dirs/tinyData/a/you:2: MY KINGDOM FOR GREP
+proj-gerp-test-dirs/tinyData/b/c/me:1: Are you excited for 40?
+proj-gerp-test-dirs/tinyData/b/hehe.txt:2: wait you don't?
+proj-gerp-test-dirs/tinyData/hello:2: hey you DO YOU KNOW WHO THAT IS?

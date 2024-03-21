@@ -1,0 +1,115 @@
+Names: Cullen McCaleb, Frank Li
+utlns: cmccal04, yli57
+
+Answer the questions below, and submit your answers under the assignment
+"gerp Design Checkoff" on Gradescope. You must sign up for a design checkoff
+slot with a TA to discuss your provided answers (see spec for sign up link).
+Make sure to submit this file *prior* to your design checkoff.
+
+For each question, give as much detail as you feel is necessary.
+
+1. What classes and structs will you implement for your program? For each class,
+   provide a list of public functions of that class; for each struct, provide a
+   list of member variables.
+
+   structs:
+   wordInstance - int pathIndex
+                - int lineNum
+   ** pathIndex represents the index to a path array containing the paths 
+   for every file.
+
+   We will have two classes, a buildHash class, and a searchDir class.
+   buildHash:
+      - buildHash(string dirName)
+         public constructor that makes an instance of the buildHash class.
+         This will essentially build a hash from the given directory.
+      - getValue(string key)
+         This will return the value vector for the requested key in the hash.
+
+   searchDir:
+      - searchDir(string dirName, string outputFile)
+         public constructor that makes an instance of searchDir. Takes in a
+         directory name and an outputFile name.
+      - searchWord(std::istream &word)
+         This function will take instream from std::cin and search for the
+         given word.
+
+        
+2. Describe the index that you will build for querying. What specific data
+   structures will you use to build this index? *Important*: Bring an
+   accompanying drawing of your index structure when you come to your checkoff.
+
+   We will use a hash map data structure. In this hash, the keys will be a
+   string representing a case insensitve word in the files, and the value will
+   be another hash map. This second hash map will have as its key the the word 
+   again, but case sensitive. The value will be list of wordInstance structs.
+   Since the key is a string, we will need to use the std::hash facility to 
+   implement our hash.
+
+3. To use your index, you will use something for lookup (the key) and you will
+   get some associated data back (the value). What are the C++ *types* of your
+   index's key and value? Examples of valid types: int, string,
+   vector<string>, vector<list<string>>; you may also define custom types using
+   structs/classes, e.g., Animal and vector<Animal> are valid types if you
+   define a struct/class named Animal. If your key/value types involve custom
+   classes/structs, they should be included in your answer to question #1.
+                
+Key type: string
+Value type: hash<string, vector<wordInstance>>          
+
+4. What do you expect the *space* complexity of your index will be? How many
+   times will a single line be stored according to your data structures?
+
+   O(n) because a single line will be stored the amount of times as words 
+   in that line.
+
+5. What is the time complexity of *building* your index? If you refer to some
+   variable, be sure to specify what the variable refers to, e.g., in "O(n)",
+   state explicitly what "n" is.
+
+   O(n) where n is the total number of words in all of the files.
+
+6. What is the time complexity of *using* your index for lookup? As above,
+   be specific about variables you use.
+
+   The time complexity is O(1) for lookup. To print the results, the time
+   complexity is O(n), since we print the path to each instance, n, of the word
+                
+7. How will you handle case-sensitive search?
+   What is the time complexity (should be close to O(1))?
+
+   To handle case-sensitive search, we will usee the second hash map to 
+   differentiate between each word, depending on the amount of
+   uppercase letters in it.
+
+8. How will you handle case-insensitive search?
+   What is the time complexity (should be close to O(1))?
+
+   For case-insensitive search, we will go through the entire second hash map
+   and print every variation of the word.
+
+9. How are you handling duplicate words within a line? For example, if a line
+   contains "the cat and the dog" and a user searches "the", this line should
+   only be reported once. How will your implementaiton achieve this?
+
+   Every time we reach a new word, and the word exists in our hash, we compare
+   that word's path to the last index of the word's path vector (which is the 
+   value in our second hash). If the paths are equal, then we don't add the new path.
+   This will prevent repetition in our paths vector, and therefore the lines
+   will not be repeated more than once.
+
+10. How will you test your implementation and what specific evidence of testing
+    will you submit?
+
+    We will try to do extensive unit testing throughout this project. We will
+    also use diff test our output files against the reference implementation.
+
+11. What is your schedule for completing this assignment? Include specific dates
+    and the tasks that you would like to accomplish by each date. Do not forget
+    testing!
+
+    12/4 - Design Checkoff, est and submit phase one
+    12/5 and 12/6 - code buildHash class
+    12/7 and 12/8 - code searchDir class
+    12/9 and 12/10 - code main.cpp, get everything working together properly
+    12/11 and (maybe) 12/12 - thoroughly test phase two and submit gerp!

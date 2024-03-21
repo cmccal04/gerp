@@ -1,0 +1,3 @@
+proj-gerp-test-dirs/tinyData/test.txt:5: we are the champions
+proj-gerp-test-dirs/tinyData/test.txt:5: we are the champions
+proj-gerp-test-dirs/tinyData/test.txt:6: we we we
